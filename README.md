@@ -1,5 +1,5 @@
 # p5.Polar
-p5.Polar is a JavaScript library that extend [p5.js](https://p5js.org/) standard drawing functions with versions using polar coordinates. The library converts polar coordinate to cartesian coordinate, and abstracts the mathematics required for making many types of geometric patterns.
+p5.Polar is a JavaScript library that extends [p5.js](https://p5js.org/) standard drawing functions with versions using polar coordinates. The library converts polar coordinates to cartesian coordinates, and abstracts the mathematics required for making many types of geometric patterns.
 
 ![alt text](https://imgur.com/8V2uuzd.png "p5.Polar example") 
 
@@ -9,24 +9,36 @@ p5.Polar is a JavaScript library that extend [p5.js](https://p5js.org/) standard
 
 ![alt text](https://imgur.com/3CPWaaS.png "why p5.Polar") 
 
-## Release Note (08/13/2020)
-What's new in version 2.1 ?
+## Release Note (10/15/2023)
+What's new in version 2.3 ?
+- Add support for custom draw functions in addition to standard geometric shapes
+
+## CDN
+[p5.Polar.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@latest/p5.Polar.js)
+
+[p5.Polar.min.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@latest/p5.Polar.min.js)
+
+## Older Version
+2.2 release note (08/28/2023): 
+- [p5.Polar.js v2.2](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@92ae01aa75a8c1206a73def951dc9db87d7c3495/p5.Polar.js)
+- [p5.Polar.min.js v2.2](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@92ae01aa75a8c1206a73def951dc9db87d7c3495/p5.Polar.min.js)
+- Contributed by [@iuli4n](https://github.com/iuli4n): fixed bugs the first call to setCenter() doesn't actually translate.
+- Contributed by [@iuli4n](https://github.com/iuli4n): added generic function to shift things around the circle.
+- Contributed by [@iuli4n](https://github.com/iuli4n): added generic callback draw function for drawing anything.
+
+2.1 release note (08/13/2020):
+- [p5.Polar.js v2.1](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@7fdf0131eaa94ef263051d9ba52a1b008729ecc2/p5.Polar.js)
+- [p5.Polar.min.js v2.1](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@7fdf0131eaa94ef263051d9ba52a1b008729ecc2/p5.Polar.min.js)
 - Fix drawing ellipse doesn't radiate outward from center point.
 - Fix bug to support drawing animation (scroll down to see the examples about how to draw animation).
 - Special thanks to the project's advisor [@charlieroberts](https://github.com/charlieroberts) for all the tips and resources!
-
-## CDN
-[p5.Polar.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar/p5.Polar.js)
-
-[p5.Polar.min.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar/p5.Polar.min.js)
 
 ## How to add library to your p5.js sketch
 - [Official guide about how to use a library](https://p5js.org/libraries/) 
 
 - Download _p5.Polar.js_ or the minified version _p5.Polar.min.js_ to your local environment. Link the file to your HTML.
 
-- Link [p5.Polar.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar/p5.Polar.js) or the minified version, [p5.Polar.min.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar/p5.Polar.min.js) to your HTML.
-
+- Link [p5.Polar.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@latest/p5.Polar.js) or the minified version, [p5.Polar.min.js](https://cdn.jsdelivr.net/gh/liz-peng/p5.Polar@latest/p5.Polar.min.js) to your HTML.
 
 - If you are using [p5.js web editor](https://editor.p5js.org/), upload _p5.Polar.js_ or _p5.Polar.min.js_ to your sketch files, and then Link the file to index.html.
 
@@ -48,6 +60,7 @@ Try out the library and create shapes and patterns at the p5.Polar [Playground](
 - polarOctagon( angle, radius, [distance] )
 - [polarEllipse( angle, widthRadius, heightRadius, [distance] )](#polarEllipse)
 - [polarPolygon( number, angle, radius, [distance] )](#polarPolygon)
+- [polarCustomFunction( function, angle, radius, distance, [params] )](#polarCustom)
 
 #### [Multiple drawing function](#multiFunction)
 - polarLines( number, radius, distance, [callback] )
@@ -59,6 +72,7 @@ Try out the library and create shapes and patterns at the p5.Polar [Playground](
 - polarOctogons( number, radius, distance, [callback] )
 - [polarEllipses( number, widthRadius, heightRadius, distance, [callback] )](#polarEllipses)
 - [polarPolygons( number, number of edges, radius, distance, [callback] )](#polarPolygons)
+- [polarCustomFunctions( function, number, radius, distance, [callback], [params] )](#polarCustomFunctions)
 
 #### [Callback function](#callback)
 The value of each member of args: 
@@ -86,6 +100,7 @@ The value of each member of args when drawing with polarEllipses() function:
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarTriangle(0, 100, 0); // works the same as polarTriangle(0, 100);
 }
 ```
@@ -95,6 +110,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarTriangle(0, 100, 50);
 }
 ```
@@ -104,6 +120,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarTriangle(30, 100, 50);
 }
 ```
@@ -115,6 +132,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarEllipse(0, 50, 100, 0); // works the same as polarEllipse(0, 50, 100)
 }
 ```
@@ -126,7 +144,28 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarPolygon(12, 0, 100);
+}
+```
+
+#### polarCustomFunction() <a name="polarCustomFunction"></a>
+###### Draw a series of arcs to form a circle
+<img src="https://imgur.com/GeE4wzE.png" width="25%" height="25%" />
+
+``` JavaScript
+function draw() { 
+    setCenter(width/2, height/2);
+    polarCustom(drawCustom, 0, 200, 0, 0, 255);
+}
+
+function drawCustom(_radius, _startColor, _endColor) {
+    for (let i = 0; i < 360; i += 20) {
+        let ratio = i / 360;
+        let currentColor = _startColor + Math.floor(ratio * (_endColor - _startColor));
+        stroke(currentColor)
+        this.arc(0, 0, _radius, _radius, this.radians(i), this.radians(i + 5 ))
+    }
 }
 ```
 
@@ -138,6 +177,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarTriangles(6, 50, 100);
 }
 ```
@@ -149,6 +189,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarPentagons(7, 50, 100);
 }
 ```
@@ -160,7 +201,28 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarEllipses(6, 50, 50, 100);
+}
+```
+
+#### polarCustomFunctions() <a name="polarCustomFunctions"></a>
+###### Draw a series of arcs to form an overlapping circular pattern
+<img src="https://imgur.com/krcS6hC.png" width="50%" height="50%" />
+
+``` JavaScript
+function draw() { 
+    setCenter(width/2, height/2);
+    polarCustoms(drawCustom, 10, 100, 60, null, 0, 255);
+}
+
+function drawCustom(_radius, _startColor, _endColor) {
+    for (let i = 0; i < 360; i += 20) {
+        let ratio = i / 360;
+        let currentColor = _startColor + Math.floor(ratio * (_endColor - _startColor));
+        stroke(currentColor)
+        this.arc(0, 0, _radius, _radius, this.radians(i), this.radians(i + 5 ))
+    }
 }
 ```
 
@@ -171,6 +233,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
     setCenter(width/2, height/2);
+    background(220);
     polarEllipses(10, 0, 0, 100, function(...args) {
         fill(args[0]*40, args[0]*40, args[0]*40, 160);
         args[2] = args[0]*6;
@@ -188,6 +251,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
   setCenter(width/2, height/2);
+  background(220);
   stroke('#666');
   noFill();
   polarEllipses(30, 40+sin(frameCount/10)*20, 80, 80);
@@ -201,6 +265,7 @@ function draw() {
 ``` JavaScript
 function draw() { 
   noFill();
+  background(220);
   stroke('#666');
   
   setCenter(width/4, height/4);
